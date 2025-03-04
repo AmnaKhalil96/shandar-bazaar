@@ -1,7 +1,6 @@
-
 import { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { Search as SearchIcon, ArrowLeft, Filter } from 'lucide-react';
+import { Search as SearchIcon, ArrowLeft, Filter, X } from 'lucide-react';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import Button from '@/components/ui/Button';

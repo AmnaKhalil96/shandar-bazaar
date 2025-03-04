@@ -1,14 +1,16 @@
 
 import { useState, useEffect } from 'react';
-import { Search, ShoppingCart, User, Heart, Menu, X } from 'lucide-react';
+import { Search, ShoppingCart, User, Heart, Menu, X, LogIn, UserPlus, Percent } from 'lucide-react';
 import Button from './ui/Button';
 import { Link } from 'react-router-dom';
 import { useCart } from '@/contexts/CartContext';
+import { useUser, SignedIn, SignedOut } from '@clerk/clerk-react';
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { cartCount } = useCart();
+  const { isSignedIn, user } = useUser();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -41,11 +43,11 @@ const Navbar = () => {
             <Link to="/categories" className="text-foreground hover:text-primary transition-colors font-medium">
               Categories
             </Link>
+            <Link to="/deals" className="text-foreground hover:text-primary transition-colors font-medium">
+              Deals
+            </Link>
             <a href="#products" className="text-foreground hover:text-primary transition-colors font-medium">
               Products
-            </a>
-            <a href="#deals" className="text-foreground hover:text-primary transition-colors font-medium">
-              Deals
             </a>
           </nav>
 
@@ -61,9 +63,32 @@ const Navbar = () => {
                 <Heart className="w-5 h-5 text-muted-foreground group-hover:text-primary transition-colors cursor-pointer" />
               </Link>
             </div>
-            <div className="relative group">
-              <User className="w-5 h-5 text-muted-foreground group-hover:text-primary transition-colors cursor-pointer" />
-            </div>
+            
+            <SignedIn>
+              <div className="relative group">
+                <Link to="/account">
+                  <User className="w-5 h-5 text-muted-foreground group-hover:text-primary transition-colors cursor-pointer" />
+                </Link>
+              </div>
+            </SignedIn>
+            
+            <SignedOut>
+              <div className="flex items-center space-x-2">
+                <Link to="/sign-in">
+                  <Button variant="ghost" size="sm" className="flex items-center">
+                    <LogIn className="w-4 h-4 mr-1" />
+                    Sign In
+                  </Button>
+                </Link>
+                <Link to="/sign-up">
+                  <Button variant="primary" size="sm" className="flex items-center">
+                    <UserPlus className="w-4 h-4 mr-1" />
+                    Sign Up
+                  </Button>
+                </Link>
+              </div>
+            </SignedOut>
+            
             <div className="relative group">
               <Link to="/cart">
                 <ShoppingCart className="w-5 h-5 text-muted-foreground group-hover:text-primary transition-colors cursor-pointer" />
@@ -104,6 +129,13 @@ const Navbar = () => {
                 >
                   Categories
                 </Link>
+                <Link 
+                  to="/deals" 
+                  className="text-foreground hover:text-primary transition-colors font-medium"
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  Deals
+                </Link>
                 <a 
                   href="#products" 
                   className="text-foreground hover:text-primary transition-colors font-medium"
@@ -111,13 +143,28 @@ const Navbar = () => {
                 >
                   Products
                 </a>
-                <a 
-                  href="#deals" 
-                  className="text-foreground hover:text-primary transition-colors font-medium"
-                  onClick={() => setIsMenuOpen(false)}
-                >
-                  Deals
-                </a>
+                
+                <SignedOut>
+                  <div className="flex flex-col space-y-2 pt-2">
+                    <Link 
+                      to="/sign-in" 
+                      className="flex items-center text-foreground hover:text-primary"
+                      onClick={() => setIsMenuOpen(false)}
+                    >
+                      <LogIn className="w-4 h-4 mr-2" />
+                      Sign In
+                    </Link>
+                    <Link 
+                      to="/sign-up" 
+                      className="flex items-center text-foreground hover:text-primary"
+                      onClick={() => setIsMenuOpen(false)}
+                    >
+                      <UserPlus className="w-4 h-4 mr-2" />
+                      Sign Up
+                    </Link>
+                  </div>
+                </SignedOut>
+                
                 <div className="flex items-center space-x-6 pt-2">
                   <Link to="/search" onClick={() => setIsMenuOpen(false)}>
                     <Search className="w-5 h-5" />

@@ -13,6 +13,10 @@ import CheckoutPage from "./pages/CheckoutPage";
 import ProductDetailPage from "./pages/ProductDetailPage";
 import FavoritesPage from "./pages/FavoritesPage";
 import SearchPage from "./pages/SearchPage";
+import SignInPage from "./pages/SignInPage";
+import SignUpPage from "./pages/SignUpPage";
+import DealsPage from "./pages/DealsPage";
+import AccountPage from "./pages/AccountPage";
 import { CartProvider } from "./contexts/CartContext";
 
 const queryClient = new QueryClient();
@@ -33,6 +37,10 @@ const App = () => (
             <Route path="/product/:productId" element={<ProductDetailPage />} />
             <Route path="/favorites" element={<FavoritesPage />} />
             <Route path="/search" element={<SearchPage />} />
+            <Route path="/sign-in/*" element={<SignInPage />} />
+            <Route path="/sign-up/*" element={<SignUpPage />} />
+            <Route path="/deals" element={<DealsPage />} />
+            <Route path="/account/*" element={<AccountPage />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>

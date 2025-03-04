@@ -1,9 +1,10 @@
 
 import { useState } from 'react';
-import { Heart, ShoppingCart, Star } from 'lucide-react';
+import { Heart, ShoppingCart, Star, Eye } from 'lucide-react';
 import { Product } from '@/lib/data';
 import { useCart } from '@/contexts/CartContext';
 import { Link } from 'react-router-dom';
+import { toast } from 'sonner';
 
 interface ProductCardProps {
   product: Product & { isFavorite?: boolean };
@@ -13,6 +14,38 @@ interface ProductCardProps {
 const ProductCard = ({ product, onToggleFavorite }: ProductCardProps) => {
   const [isHovered, setIsHovered] = useState(false);
   const { addToCart } = useCart();
+  const [favorites, setFavorites] = useState<number[]>(() => {
+    const savedFavorites = localStorage.getItem('favorites');
+    return savedFavorites ? JSON.parse(savedFavorites) : [];
+  });
+
+  const isFavorite = favorites.includes(product.id);
+  
+  const toggleFavorite = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    
+    const newFavorites = isFavorite
+      ? favorites.filter(id => id !== product.id)
+      : [...favorites, product.id];
+      
+    setFavorites(newFavorites);
+    localStorage.setItem('favorites', JSON.stringify(newFavorites));
+    
+    if (isFavorite) {
+      toast.info(`Removed ${product.name} from favorites`);
+    } else {
+      toast.success(`Added ${product.name} to favorites`);
+    }
+    
+    if (onToggleFavorite) {
+      onToggleFavorite(product.id);
+    }
+  };
+  
+  const handleAddToCart = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    addToCart(product);
+  };
   
   return (
     <div 
@@ -51,27 +84,27 @@ const ProductCard = ({ product, onToggleFavorite }: ProductCardProps) => {
           }`}
         >
           <button 
-            className={`w-10 h-10 rounded-full bg-white flex items-center justify-center shadow-lg hover:bg-primary hover:text-white transition-colors ${product.isFavorite ? 'bg-primary text-white' : ''}`}
+            className={`w-10 h-10 rounded-full bg-white flex items-center justify-center shadow-lg hover:bg-primary hover:text-white transition-colors ${isFavorite ? 'bg-primary text-white' : ''}`}
             aria-label="Add to wishlist"
-            onClick={(e) => {
-              e.stopPropagation();
-              if (onToggleFavorite) {
-                onToggleFavorite(product.id);
-              }
-            }}
+            onClick={toggleFavorite}
           >
-            <Heart className="w-5 h-5" fill={product.isFavorite ? "currentColor" : "none"} />
+            <Heart className="w-5 h-5" fill={isFavorite ? "currentColor" : "none"} />
           </button>
           <button 
             className="w-10 h-10 rounded-full bg-white flex items-center justify-center shadow-lg hover:bg-primary hover:text-white transition-colors"
             aria-label="Add to cart"
-            onClick={(e) => {
-              e.stopPropagation();
-              addToCart(product);
-            }}
+            onClick={handleAddToCart}
           >
             <ShoppingCart className="w-5 h-5" />
           </button>
+          <Link
+            to={`/product/${product.id}`}
+            className="w-10 h-10 rounded-full bg-white flex items-center justify-center shadow-lg hover:bg-primary hover:text-white transition-colors"
+            aria-label="Quick view"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <Eye className="w-5 h-5" />
+          </Link>
         </div>
       </div>
       
@@ -80,7 +113,9 @@ const ProductCard = ({ product, onToggleFavorite }: ProductCardProps) => {
         <div className="mb-1">
           <span className="text-sm text-muted-foreground">{product.category}</span>
         </div>
-        <h3 className="font-medium mb-2 text-lg leading-tight">{product.name}</h3>
+        <Link to={`/product/${product.id}`} className="block">
+          <h3 className="font-medium mb-2 text-lg leading-tight hover:text-primary transition-colors">{product.name}</h3>
+        </Link>
         <div className="flex items-center gap-2 mb-3">
           <div className="flex text-primary">
             {[...Array(5)].map((_, i) => (
@@ -94,17 +129,21 @@ const ProductCard = ({ product, onToggleFavorite }: ProductCardProps) => {
           <span className="text-sm text-muted-foreground">{product.rating}</span>
         </div>
         <div className="flex items-center justify-between">
-          <span className="font-bold text-xl">${product.price.toFixed(2)}</span>
-          <Link 
-            to={`/product/${product.id}`}
-            className="text-sm font-medium text-primary hover:underline"
-            aria-label="View product details"
-            onClick={(e) => {
-              e.stopPropagation();
-            }}
+          <div>
+            <span className="font-bold text-xl">${product.price.toFixed(2)}</span>
+            {product.sale && (
+              <span className="ml-2 text-sm text-muted-foreground line-through">
+                ${(product.price * 1.2).toFixed(2)}
+              </span>
+            )}
+          </div>
+          <button
+            onClick={handleAddToCart}
+            className="text-sm font-medium text-primary hover:underline flex items-center gap-1"
+            aria-label="Add to cart"
           >
-            View Details
-          </Link>
+            <ShoppingCart className="w-4 h-4" /> Add
+          </button>
         </div>
       </div>
     </div>

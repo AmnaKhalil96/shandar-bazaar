@@ -5,7 +5,7 @@ import Footer from '@/components/Footer';
 import Newsletter from '@/components/Newsletter';
 import ProductCard from '@/components/ProductCard';
 import { products } from '@/lib/data';
-import { ArrowRight, Percent, Clock, Tag, Fire } from 'lucide-react';
+import { ArrowRight, Percent, Clock, Tag, Flame } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import Button from '@/components/ui/Button';
 
@@ -87,7 +87,7 @@ const DealsPage = () => {
             {activeTab === 'all' && (
               <div className="mb-16">
                 <h2 className="text-2xl font-bold mb-8 flex items-center">
-                  <Fire className="text-primary mr-2" /> Featured Deals
+                  <Flame className="text-primary mr-2" /> Featured Deals
                 </h2>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                   {featuredDeals.map((product) => (

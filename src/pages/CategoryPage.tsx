@@ -1,7 +1,7 @@
 
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { Search, Heart, SlidersHorizontal, ArrowLeft, Grid, List } from 'lucide-react';
+import { Search, Heart, SlidersHorizontal, ArrowLeft, Grid, List, Star } from 'lucide-react';
 import Navbar from '@/components/Navbar';
 import ProductCard from '@/components/ProductCard';
 import Newsletter from '@/components/Newsletter';

@@ -2,13 +2,17 @@
 import { useState } from 'react';
 import { Heart, ShoppingCart, Star } from 'lucide-react';
 import { Product } from '@/lib/data';
+import { useCart } from '@/contexts/CartContext';
+import { Link } from 'react-router-dom';
 
 interface ProductCardProps {
   product: Product & { isFavorite?: boolean };
+  onToggleFavorite?: (productId: number) => void;
 }
 
-const ProductCard = ({ product }: ProductCardProps) => {
+const ProductCard = ({ product, onToggleFavorite }: ProductCardProps) => {
   const [isHovered, setIsHovered] = useState(false);
+  const { addToCart } = useCart();
   
   return (
     <div 
@@ -50,7 +54,10 @@ const ProductCard = ({ product }: ProductCardProps) => {
             className={`w-10 h-10 rounded-full bg-white flex items-center justify-center shadow-lg hover:bg-primary hover:text-white transition-colors ${product.isFavorite ? 'bg-primary text-white' : ''}`}
             aria-label="Add to wishlist"
             onClick={(e) => {
-              e.stopPropagation(); // Prevent parent onClick from firing
+              e.stopPropagation();
+              if (onToggleFavorite) {
+                onToggleFavorite(product.id);
+              }
             }}
           >
             <Heart className="w-5 h-5" fill={product.isFavorite ? "currentColor" : "none"} />
@@ -59,7 +66,8 @@ const ProductCard = ({ product }: ProductCardProps) => {
             className="w-10 h-10 rounded-full bg-white flex items-center justify-center shadow-lg hover:bg-primary hover:text-white transition-colors"
             aria-label="Add to cart"
             onClick={(e) => {
-              e.stopPropagation(); // Prevent parent onClick from firing
+              e.stopPropagation();
+              addToCart(product);
             }}
           >
             <ShoppingCart className="w-5 h-5" />
@@ -87,15 +95,16 @@ const ProductCard = ({ product }: ProductCardProps) => {
         </div>
         <div className="flex items-center justify-between">
           <span className="font-bold text-xl">${product.price.toFixed(2)}</span>
-          <button 
+          <Link 
+            to={`/product/${product.id}`}
             className="text-sm font-medium text-primary hover:underline"
             aria-label="View product details"
             onClick={(e) => {
-              e.stopPropagation(); // Prevent parent onClick from firing
+              e.stopPropagation();
             }}
           >
             View Details
-          </button>
+          </Link>
         </div>
       </div>
     </div>

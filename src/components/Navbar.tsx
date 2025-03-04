@@ -1,11 +1,14 @@
+
 import { useState, useEffect } from 'react';
 import { Search, ShoppingCart, User, Heart, Menu, X } from 'lucide-react';
 import Button from './ui/Button';
 import { Link } from 'react-router-dom';
+import { useCart } from '@/contexts/CartContext';
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { cartCount } = useCart();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -49,19 +52,27 @@ const Navbar = () => {
           {/* Search and Icons */}
           <div className="hidden md:flex items-center space-x-6">
             <div className="relative group">
-              <Search className="w-5 h-5 text-muted-foreground group-hover:text-primary transition-colors cursor-pointer" />
+              <Link to="/search">
+                <Search className="w-5 h-5 text-muted-foreground group-hover:text-primary transition-colors cursor-pointer" />
+              </Link>
             </div>
             <div className="relative group">
-              <Heart className="w-5 h-5 text-muted-foreground group-hover:text-primary transition-colors cursor-pointer" />
+              <Link to="/favorites">
+                <Heart className="w-5 h-5 text-muted-foreground group-hover:text-primary transition-colors cursor-pointer" />
+              </Link>
             </div>
             <div className="relative group">
               <User className="w-5 h-5 text-muted-foreground group-hover:text-primary transition-colors cursor-pointer" />
             </div>
             <div className="relative group">
-              <ShoppingCart className="w-5 h-5 text-muted-foreground group-hover:text-primary transition-colors cursor-pointer" />
-              <span className="absolute -top-2 -right-2 w-5 h-5 flex items-center justify-center bg-primary text-primary-foreground text-xs font-bold rounded-full">
-                0
-              </span>
+              <Link to="/cart">
+                <ShoppingCart className="w-5 h-5 text-muted-foreground group-hover:text-primary transition-colors cursor-pointer" />
+                {cartCount > 0 && (
+                  <span className="absolute -top-2 -right-2 w-5 h-5 flex items-center justify-center bg-primary text-primary-foreground text-xs font-bold rounded-full">
+                    {cartCount}
+                  </span>
+                )}
+              </Link>
             </div>
           </div>
 
@@ -108,14 +119,21 @@ const Navbar = () => {
                   Deals
                 </a>
                 <div className="flex items-center space-x-6 pt-2">
-                  <Search className="w-5 h-5" />
-                  <Heart className="w-5 h-5" />
-                  <User className="w-5 h-5" />
+                  <Link to="/search" onClick={() => setIsMenuOpen(false)}>
+                    <Search className="w-5 h-5" />
+                  </Link>
+                  <Link to="/favorites" onClick={() => setIsMenuOpen(false)}>
+                    <Heart className="w-5 h-5" />
+                  </Link>
                   <div className="relative">
-                    <ShoppingCart className="w-5 h-5" />
-                    <span className="absolute -top-2 -right-2 w-5 h-5 flex items-center justify-center bg-primary text-primary-foreground text-xs font-bold rounded-full">
-                      0
-                    </span>
+                    <Link to="/cart" onClick={() => setIsMenuOpen(false)}>
+                      <ShoppingCart className="w-5 h-5" />
+                      {cartCount > 0 && (
+                        <span className="absolute -top-2 -right-2 w-5 h-5 flex items-center justify-center bg-primary text-primary-foreground text-xs font-bold rounded-full">
+                          {cartCount}
+                        </span>
+                      )}
+                    </Link>
                   </div>
                 </div>
               </nav>

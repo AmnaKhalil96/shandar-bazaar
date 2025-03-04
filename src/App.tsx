@@ -3,7 +3,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
 import CategoryPage from "./pages/CategoryPage";
 import NotFound from "./pages/NotFound";
@@ -27,23 +27,21 @@ const App = () => (
       <CartProvider>
         <Toaster />
         <Sonner />
-        <BrowserRouter>
-          <Routes>
-            <Route path="/" element={<Index />} />
-            <Route path="/categories" element={<CategoriesPage />} />
-            <Route path="/category/:categoryName" element={<CategoryPage />} />
-            <Route path="/cart" element={<CartPage />} />
-            <Route path="/checkout" element={<CheckoutPage />} />
-            <Route path="/product/:productId" element={<ProductDetailPage />} />
-            <Route path="/favorites" element={<FavoritesPage />} />
-            <Route path="/search" element={<SearchPage />} />
-            <Route path="/sign-in/*" element={<SignInPage />} />
-            <Route path="/sign-up/*" element={<SignUpPage />} />
-            <Route path="/deals" element={<DealsPage />} />
-            <Route path="/account/*" element={<AccountPage />} />
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-        </BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Index />} />
+          <Route path="/categories" element={<CategoriesPage />} />
+          <Route path="/category/:categoryName" element={<CategoryPage />} />
+          <Route path="/cart" element={<CartPage />} />
+          <Route path="/checkout" element={<CheckoutPage />} />
+          <Route path="/product/:productId" element={<ProductDetailPage />} />
+          <Route path="/favorites" element={<FavoritesPage />} />
+          <Route path="/search" element={<SearchPage />} />
+          <Route path="/sign-in/*" element={<SignInPage />} />
+          <Route path="/sign-up/*" element={<SignUpPage />} />
+          <Route path="/deals" element={<DealsPage />} />
+          <Route path="/account/*" element={<AccountPage />} />
+          <Route path="*" element={<NotFound />} />
+        </Routes>
       </CartProvider>
     </TooltipProvider>
   </QueryClientProvider>

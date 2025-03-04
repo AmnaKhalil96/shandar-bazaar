@@ -1,4 +1,3 @@
-
 export interface Product {
   id: number;
   name: string;
@@ -343,6 +342,218 @@ export const products: Product[] = [
     sale: true,
     description: "Set of 3 low-maintenance indoor plants in decorative pots to enhance your home decor and air quality.",
     stock: 19
+  },
+  {
+    id: 31,
+    name: "Gaming Mechanical Keyboard",
+    price: 129.99,
+    image: "https://images.unsplash.com/photo-1595044426077-d36d9236d44e?auto=format&fit=crop&w=800&q=80",
+    category: "Electronics",
+    rating: 4.8,
+    newArrival: true,
+    description: "Premium mechanical gaming keyboard with RGB lighting, customizable macro keys, and durable construction for competitive gaming.",
+    stock: 14
+  },
+  {
+    id: 32,
+    name: "Professional Drawing Tablet",
+    price: 249.99,
+    image: "https://images.unsplash.com/photo-1603731023095-4686e285bb65?auto=format&fit=crop&w=800&q=80",
+    category: "Electronics",
+    rating: 4.7,
+    description: "High-precision drawing tablet with pressure sensitivity, tilt recognition, and wireless connectivity for digital artists and designers.",
+    stock: 8
+  },
+  {
+    id: 33,
+    name: "Handcrafted Ceramic Mug Set",
+    price: 39.99,
+    image: "https://images.unsplash.com/photo-1577045246047-3dd9ddda285a?auto=format&fit=crop&w=800&q=80",
+    category: "Home & Living",
+    rating: 4.5,
+    sale: true,
+    description: "Set of 4 unique handcrafted ceramic mugs, each individually designed with natural glazes and modern aesthetics.",
+    stock: 16
+  },
+  {
+    id: 34,
+    name: "Vintage Leather Messenger Bag",
+    price: 149.99,
+    image: "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?auto=format&fit=crop&w=800&q=80",
+    category: "Fashion",
+    rating: 4.8,
+    description: "Genuine leather messenger bag with antique brass hardware, multiple compartments, and adjustable shoulder strap.",
+    stock: 7
+  },
+  {
+    id: 35,
+    name: "Smart LED Light Bulb Set",
+    price: 59.99,
+    image: "https://images.unsplash.com/photo-1557333451-1a1cffde6ec9?auto=format&fit=crop&w=800&q=80",
+    category: "Electronics",
+    rating: 4.4,
+    sale: true,
+    description: "Set of 4 smart LED bulbs with millions of colors, voice control compatibility, and smartphone app for customized lighting scenarios.",
+    stock: 22
+  },
+  {
+    id: 36,
+    name: "Premium Yoga Block Set",
+    price: 29.99,
+    image: "https://images.unsplash.com/photo-1638536531392-fd2b6f5b924d?auto=format&fit=crop&w=800&q=80",
+    category: "Sports",
+    rating: 4.3,
+    description: "Set of 2 high-density foam yoga blocks with beveled edges for comfortable grip during various yoga poses and exercises.",
+    stock: 25
+  },
+  {
+    id: 37,
+    name: "Adjustable Standing Desk",
+    price: 329.99,
+    image: "https://images.unsplash.com/photo-1605565348518-bef3e7d6fed8?auto=format&fit=crop&w=800&q=80",
+    category: "Home & Living",
+    rating: 4.6,
+    newArrival: true,
+    description: "Electric height-adjustable standing desk with memory settings, spacious work surface, and cable management system.",
+    stock: 9
+  },
+  {
+    id: 38,
+    name: "Luxury Scented Candle Collection",
+    price: 49.99,
+    image: "https://images.unsplash.com/photo-1603006905886-bffec66944ca?auto=format&fit=crop&w=800&q=80",
+    category: "Home & Living",
+    rating: 4.7,
+    sale: true,
+    description: "Set of 3 premium scented candles made with natural soy wax, cotton wicks, and essential oils for a calming atmosphere.",
+    stock: 18
+  },
+  {
+    id: 39,
+    name: "Slim Minimalist Wallet",
+    price: 34.99,
+    image: "https://images.unsplash.com/photo-1606506011051-aa5bce1bd236?auto=format&fit=crop&w=800&q=80",
+    category: "Fashion",
+    rating: 4.5,
+    description: "Ultra-thin RFID-blocking wallet made from premium leather with smart card organization and cash compartment.",
+    stock: 28
+  },
+  {
+    id: 40,
+    name: "Portable Espresso Maker",
+    price: 69.99,
+    image: "https://images.unsplash.com/photo-1575488945355-abaffcc35421?auto=format&fit=crop&w=800&q=80",
+    category: "Home & Living",
+    rating: 4.4,
+    newArrival: true,
+    description: "Manual portable espresso maker that requires no electricity, perfect for travel, camping, or office use.",
+    stock: 12
+  },
+  {
+    id: 41,
+    name: "Wireless Earbuds Pro",
+    price: 149.99,
+    image: "https://images.unsplash.com/photo-1606741965509-717b9fdd6549?auto=format&fit=crop&w=800&q=80",
+    category: "Electronics",
+    rating: 4.9,
+    sale: true,
+    description: "Premium wireless earbuds with active noise cancellation, spatial audio, sweat resistance, and 24-hour battery life.",
+    stock: 15
+  },
+  {
+    id: 42,
+    name: "Digital Art Print Collection",
+    price: 79.99,
+    image: "https://images.unsplash.com/photo-1581430872221-d2a064e568f4?auto=format&fit=crop&w=800&q=80",
+    category: "Home & Living",
+    rating: 4.6,
+    description: "Set of 3 museum-quality art prints on archival paper, ready to frame and perfect for modern home decor.",
+    stock: 10
+  },
+  {
+    id: 43,
+    name: "Organic Skincare Gift Set",
+    price: 89.99,
+    image: "https://images.unsplash.com/photo-1570194065650-d99fb4cb6a24?auto=format&fit=crop&w=800&q=80",
+    category: "Beauty",
+    rating: 4.7,
+    newArrival: true,
+    description: "Complete organic skincare set with cleanser, toner, serum, and moisturizer made from natural ingredients.",
+    stock: 14
+  },
+  {
+    id: 44,
+    name: "Compact Air Purifier",
+    price: 119.99,
+    image: "https://images.unsplash.com/photo-1585747860715-2ba37e788b70?auto=format&fit=crop&w=800&q=80",
+    category: "Home & Living",
+    rating: 4.5,
+    sale: true,
+    description: "HEPA air purifier that removes 99.97% of airborne particles, with quiet operation and coverage for rooms up to 300 sq ft.",
+    stock: 19
+  },
+  {
+    id: 45,
+    name: "Smart Body Weight Scale",
+    price: 49.99,
+    image: "https://images.unsplash.com/photo-1575052814086-f385e2e2ad1b?auto=format&fit=crop&w=800&q=80",
+    category: "Sports",
+    rating: 4.3,
+    description: "WiFi-connected smart scale that measures weight, body fat, muscle mass, and more with companion app integration.",
+    stock: 21
+  },
+  {
+    id: 46,
+    name: "Premium Sous Vide Cooker",
+    price: 129.99,
+    image: "https://images.unsplash.com/photo-1589786742305-f24d9b1125e1?auto=format&fit=crop&w=800&q=80",
+    category: "Home & Living",
+    rating: 4.8,
+    newArrival: true,
+    description: "Precision cooker with WiFi connectivity, waterproof design, and powerful heating element for perfect results every time.",
+    stock: 11
+  },
+  {
+    id: 47,
+    name: "Wooden Board Game Collection",
+    price: 59.99,
+    image: "https://images.unsplash.com/photo-1637069585336-827b298fe84a?auto=format&fit=crop&w=800&q=80",
+    category: "Books",
+    rating: 4.6,
+    sale: true,
+    description: "Set of 3 classic strategy board games crafted from sustainable hardwood with natural finish and storage box.",
+    stock: 13
+  },
+  {
+    id: 48,
+    name: "Luxury Fountain Pen",
+    price: 79.99,
+    image: "https://images.unsplash.com/photo-1560701545-c0c9003a30d2?auto=format&fit=crop&w=800&q=80",
+    category: "Books",
+    rating: 4.7,
+    description: "Elegant fountain pen with stainless steel nib, refillable ink reservoir, and balanced weight for comfortable writing.",
+    stock: 16
+  },
+  {
+    id: 49,
+    name: "Wireless Charging Station",
+    price: 39.99,
+    image: "https://images.unsplash.com/photo-1628815113969-0487917fc601?auto=format&fit=crop&w=800&q=80",
+    category: "Electronics",
+    rating: 4.5,
+    sale: true,
+    description: "3-in-1 wireless charging station for smartphone, smartwatch, and earbuds with fast charging technology.",
+    stock: 23
+  },
+  {
+    id: 50,
+    name: "Natural Sleep Aid Pillow Spray",
+    price: 24.99,
+    image: "https://images.unsplash.com/photo-1608571423902-eed4a5ad8108?auto=format&fit=crop&w=800&q=80",
+    category: "Beauty",
+    rating: 4.4,
+    description: "Calming pillow mist with essential oils blend of lavender, chamomile, and vetiver to promote better sleep.",
+    stock: 30
   }
 ];
 

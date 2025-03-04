@@ -9,6 +9,7 @@ import Button from '@/components/ui/Button';
 import { products } from '@/lib/data';
 import { useCart } from '@/contexts/CartContext';
 import ProductCard from '@/components/ProductCard';
+import { toast } from 'sonner';
 
 const ProductDetailPage = () => {
   const { productId } = useParams<{ productId: string }>();
@@ -39,7 +40,7 @@ const ProductDetailPage = () => {
     }, 100);
     
     return () => clearTimeout(timer);
-  }, [product]);
+  }, [product, productId]);
   
   if (!product) {
     return (
@@ -65,11 +66,18 @@ const ProductDetailPage = () => {
     
     if (isFavorite) {
       favorites = favorites.filter((id: number) => id !== product.id);
+      toast.info(`Removed ${product.name} from favorites`);
     } else {
       favorites.push(product.id);
+      toast.success(`Added ${product.name} to favorites`);
     }
     
     localStorage.setItem('favorites', JSON.stringify(favorites));
+  };
+
+  const handleAddToCart = () => {
+    addToCart(product, quantity);
+    toast.success(`Added ${quantity} ${product.name} to cart`);
   };
   
   return (
@@ -151,7 +159,7 @@ const ProductDetailPage = () => {
                 <div className="flex flex-col sm:flex-row gap-4">
                   <Button 
                     className="flex items-center justify-center gap-2 flex-1"
-                    onClick={() => addToCart(product, quantity)}
+                    onClick={handleAddToCart}
                   >
                     <ShoppingCart className="w-5 h-5" />
                     Add to Cart

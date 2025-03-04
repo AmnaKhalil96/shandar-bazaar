@@ -4,7 +4,7 @@ import { Heart, ShoppingCart, Star } from 'lucide-react';
 import { Product } from '@/lib/data';
 
 interface ProductCardProps {
-  product: Product;
+  product: Product & { isFavorite?: boolean };
 }
 
 const ProductCard = ({ product }: ProductCardProps) => {
@@ -47,14 +47,20 @@ const ProductCard = ({ product }: ProductCardProps) => {
           }`}
         >
           <button 
-            className="w-10 h-10 rounded-full bg-white flex items-center justify-center shadow-lg hover:bg-primary hover:text-white transition-colors"
+            className={`w-10 h-10 rounded-full bg-white flex items-center justify-center shadow-lg hover:bg-primary hover:text-white transition-colors ${product.isFavorite ? 'bg-primary text-white' : ''}`}
             aria-label="Add to wishlist"
+            onClick={(e) => {
+              e.stopPropagation(); // Prevent parent onClick from firing
+            }}
           >
-            <Heart className="w-5 h-5" />
+            <Heart className="w-5 h-5" fill={product.isFavorite ? "currentColor" : "none"} />
           </button>
           <button 
             className="w-10 h-10 rounded-full bg-white flex items-center justify-center shadow-lg hover:bg-primary hover:text-white transition-colors"
             aria-label="Add to cart"
+            onClick={(e) => {
+              e.stopPropagation(); // Prevent parent onClick from firing
+            }}
           >
             <ShoppingCart className="w-5 h-5" />
           </button>
@@ -84,6 +90,9 @@ const ProductCard = ({ product }: ProductCardProps) => {
           <button 
             className="text-sm font-medium text-primary hover:underline"
             aria-label="View product details"
+            onClick={(e) => {
+              e.stopPropagation(); // Prevent parent onClick from firing
+            }}
           >
             View Details
           </button>

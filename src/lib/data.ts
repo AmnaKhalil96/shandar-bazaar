@@ -1,4 +1,3 @@
-
 export interface Product {
   id: number;
   name: string;
@@ -8,6 +7,7 @@ export interface Product {
   rating: number;
   sale?: boolean;
   newArrival?: boolean;
+  isFavorite?: boolean;
 }
 
 export interface Category {

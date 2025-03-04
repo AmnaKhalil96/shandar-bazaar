@@ -1,6 +1,7 @@
 
 import { ArrowRight, Laptop, Shirt, Home, Sparkles, Dumbbell, BookOpen } from 'lucide-react';
 import { categories } from '@/lib/data';
+import { Link } from 'react-router-dom';
 
 const getCategoryIcon = (iconName: string) => {
   switch (iconName) {
@@ -30,19 +31,20 @@ const CategorySection = () => {
             <h2 className="text-sm font-medium text-primary mb-2">BROWSE CATEGORIES</h2>
             <h3 className="text-3xl font-bold text-foreground">Popular Categories</h3>
           </div>
-          <a 
-            href="#" 
+          <Link 
+            to="/categories" 
             className="flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors mt-4 md:mt-0 group"
           >
             View All Categories
             <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
-          </a>
+          </Link>
         </div>
 
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-6">
           {categories.map((category) => (
-            <div 
+            <Link 
               key={category.id}
+              to={`/category/${category.name.toLowerCase()}`}
               className="bg-white rounded-xl p-6 text-center shadow-sm hover:shadow-md transition-all hover:-translate-y-1 group cursor-pointer"
             >
               <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-primary/10 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition-colors">
@@ -50,7 +52,7 @@ const CategorySection = () => {
               </div>
               <h4 className="font-medium text-lg mb-1">{category.name}</h4>
               <p className="text-sm text-muted-foreground">{category.itemCount} Items</p>
-            </div>
+            </Link>
           ))}
         </div>
       </div>

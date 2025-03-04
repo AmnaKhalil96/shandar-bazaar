@@ -190,6 +190,159 @@ export const products: Product[] = [
     rating: 4.5,
     description: "Stylish coffee table with clean lines, durable construction, and ample surface space for your living room.",
     stock: 7
+  },
+  // Additional products start here
+  {
+    id: 17,
+    name: "Women's Designer Sunglasses",
+    price: 159.99,
+    image: "https://images.unsplash.com/photo-1511499767150-a48a237f0083?auto=format&fit=crop&w=800&q=80",
+    category: "Fashion",
+    rating: 4.6,
+    sale: true,
+    description: "Luxury designer sunglasses with UV protection, premium build quality, and timeless style for any occasion.",
+    stock: 12
+  },
+  {
+    id: 18,
+    name: "Premium Vacuum Cleaner",
+    price: 349.99,
+    image: "https://images.unsplash.com/photo-1558317374-067fb5f30001?auto=format&fit=crop&w=800&q=80",
+    category: "Home & Living",
+    rating: 4.8,
+    sale: true,
+    description: "Powerful cordless vacuum with advanced filtration, multiple cleaning modes, and up to 60 minutes of runtime.",
+    stock: 9
+  },
+  {
+    id: 19,
+    name: "Smart Home Speaker System",
+    price: 199.99,
+    image: "https://images.unsplash.com/photo-1512446816042-444d641267d4?auto=format&fit=crop&w=800&q=80",
+    category: "Electronics",
+    rating: 4.7,
+    newArrival: true,
+    description: "Intelligent voice-activated speaker with premium sound quality, smart home controls, and virtual assistant capabilities.",
+    stock: 15
+  },
+  {
+    id: 20,
+    name: "Professional Blender",
+    price: 129.99,
+    image: "https://images.unsplash.com/photo-1570222094114-d054a817e56b?auto=format&fit=crop&w=800&q=80",
+    category: "Home & Living",
+    rating: 4.6,
+    sale: true,
+    description: "High-performance blender with multiple speed settings, durable blades, and powerful motor for smooth blending results.",
+    stock: 14
+  },
+  {
+    id: 21,
+    name: "Leather Wallet",
+    price: 49.99,
+    image: "https://images.unsplash.com/photo-1627123424574-724758594e93?auto=format&fit=crop&w=800&q=80",
+    category: "Fashion",
+    rating: 4.4,
+    description: "Genuine leather wallet with multiple card slots, sleek design, and RFID blocking technology for security.",
+    stock: 25
+  },
+  {
+    id: 22,
+    name: "Electric Toothbrush",
+    price: 89.99,
+    image: "https://images.unsplash.com/photo-1559591937-eecd6a5a87a9?auto=format&fit=crop&w=800&q=80",
+    category: "Beauty",
+    rating: 4.7,
+    sale: true,
+    description: "Advanced sonic toothbrush with multiple cleaning modes, pressure sensor, and long battery life for optimal oral care.",
+    stock: 18
+  },
+  {
+    id: 23,
+    name: "Aromatherapy Diffuser",
+    price: 39.99,
+    image: "https://images.unsplash.com/photo-1608571423902-eed4a5ad8108?auto=format&fit=crop&w=800&q=80",
+    category: "Home & Living",
+    rating: 4.5,
+    newArrival: true,
+    description: "Ultrasonic essential oil diffuser with LED mood lighting, multiple mist settings, and automatic shut-off feature.",
+    stock: 22
+  },
+  {
+    id: 24,
+    name: "Fitness Tracker",
+    price: 99.99,
+    image: "https://images.unsplash.com/photo-1576243345690-4e4b79b63eaa?auto=format&fit=crop&w=800&q=80",
+    category: "Sports",
+    rating: 4.6,
+    sale: true,
+    description: "Waterproof fitness tracker with heart rate monitoring, sleep tracking, and up to 7 days of battery life.",
+    stock: 17
+  },
+  {
+    id: 25,
+    name: "Women's Running Shoes",
+    price: 119.99,
+    image: "https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?auto=format&fit=crop&w=800&q=80",
+    category: "Fashion",
+    rating: 4.7,
+    sale: true,
+    description: "Lightweight women's running shoes with responsive cushioning, breathable mesh upper, and durable outsole for daily use.",
+    stock: 20
+  },
+  {
+    id: 26,
+    name: "Wireless Gaming Mouse",
+    price: 79.99,
+    image: "https://images.unsplash.com/photo-1615663245857-ac93bb7c39e7?auto=format&fit=crop&w=800&q=80",
+    category: "Electronics",
+    rating: 4.8,
+    newArrival: true,
+    description: "Ultra-responsive wireless gaming mouse with RGB lighting, programmable buttons, and high-precision optical sensor.",
+    stock: 13
+  },
+  {
+    id: 27,
+    name: "Premium Coffee Maker",
+    price: 149.99,
+    image: "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=800&q=80",
+    category: "Home & Living",
+    rating: 4.5,
+    sale: true,
+    description: "Programmable coffee maker with thermal carafe, adjustable brew strength, and built-in grinder for the perfect cup.",
+    stock: 11
+  },
+  {
+    id: 28,
+    name: "Silk Pillowcase Set",
+    price: 59.99,
+    image: "https://images.unsplash.com/photo-1629949008788-0d743f33f286?auto=format&fit=crop&w=800&q=80",
+    category: "Home & Living",
+    rating: 4.6,
+    description: "100% natural silk pillowcases that reduce hair breakage and skin creasing while providing luxurious comfort.",
+    stock: 16
+  },
+  {
+    id: 29,
+    name: "Smart Door Lock",
+    price: 219.99,
+    image: "https://images.unsplash.com/photo-1595750223225-2cb154ab8665?auto=format&fit=crop&w=800&q=80",
+    category: "Electronics",
+    rating: 4.7,
+    newArrival: true,
+    description: "Keyless entry smart lock with multiple access methods, remote control, and integration with smart home systems.",
+    stock: 8
+  },
+  {
+    id: 30,
+    name: "Indoor Plant Collection",
+    price: 79.99,
+    image: "https://images.unsplash.com/photo-1545165375-3036a4916e5e?auto=format&fit=crop&w=800&q=80",
+    category: "Home & Living",
+    rating: 4.4,
+    sale: true,
+    description: "Set of 3 low-maintenance indoor plants in decorative pots to enhance your home decor and air quality.",
+    stock: 19
   }
 ];
 

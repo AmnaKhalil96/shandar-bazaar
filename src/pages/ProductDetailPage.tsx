@@ -28,6 +28,12 @@ const ProductDetailPage = () => {
     : [];
   
   useEffect(() => {
+    // Reset scroll position when product changes
+    window.scrollTo(0, 0);
+    
+    // Reset quantity when product changes
+    setQuantity(1);
+    
     // Check if product is in favorites
     const savedFavorites = localStorage.getItem('favorites');
     if (savedFavorites && product) {
@@ -40,13 +46,13 @@ const ProductDetailPage = () => {
     }, 100);
     
     return () => clearTimeout(timer);
-  }, [product, productId]);
+  }, [product, productId]); // Added productId dependency to ensure effect runs when URL changes
   
   if (!product) {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center">
         <h1 className="text-2xl font-bold mb-4">Product not found</h1>
-        <Button onClick={() => navigate('/')}>Back to Home</Button>
+        <Button onClick={() => navigate('/categories')}>Browse Categories</Button>
       </div>
     );
   }
@@ -96,7 +102,7 @@ const ProductDetailPage = () => {
           {/* Product Detail */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 mb-16">
             {/* Product Image */}
-            <div className="bg-white rounded-xl overflow-hidden shadow-sm">
+            <div className="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-all">
               <img 
                 src={product.image} 
                 alt={product.name}

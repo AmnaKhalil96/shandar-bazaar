@@ -29,8 +29,15 @@ const getCategoryIcon = (iconName: string) => {
 
 const CategoriesPage = () => {
   const [isPageLoaded, setIsPageLoaded] = useState(false);
+  const [popularProducts, setPopularProducts] = useState(products.slice(0, 8));
   
   useEffect(() => {
+    // Get top rated products
+    const topRated = [...products]
+      .sort((a, b) => b.rating - a.rating)
+      .slice(0, 8);
+    setPopularProducts(topRated);
+    
     const timer = setTimeout(() => {
       setIsPageLoaded(true);
     }, 100);
@@ -76,7 +83,7 @@ const CategoriesPage = () => {
           <div className="mt-12">
             <h2 className="text-2xl font-bold mb-6">Popular Products</h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-              {products.slice(0, 4).map((product) => (
+              {popularProducts.map((product) => (
                 <ProductCard key={product.id} product={product} />
               ))}
             </div>

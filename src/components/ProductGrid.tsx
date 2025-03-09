@@ -12,8 +12,8 @@ const ProductGrid = () => {
   
   // Filter products based on active category
   const filteredProducts = activeCategory === 'All' 
-    ? products 
-    : products.filter(product => product.category === activeCategory);
+    ? products.slice(0, 8) // Only show first 8 products for All category
+    : products.filter(product => product.category === activeCategory).slice(0, 8);
 
   return (
     <section id="products" className="py-24">
@@ -41,7 +41,7 @@ const ProductGrid = () => {
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {filteredProducts.slice(0, 8).map((product) => (
+          {filteredProducts.map((product) => (
             <ProductCard key={product.id} product={product} />
           ))}
         </div>

@@ -47,7 +47,7 @@ const ProductGrid = () => {
         </div>
 
         <div className="mt-12 text-center">
-          <Link to="/categories">
+          <Link to="/products">
             <Button 
               variant="outline" 
               className="mx-auto group"

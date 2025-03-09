@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { Search, ShoppingCart, User, Heart, Menu, X, LogIn, UserPlus, Percent } from 'lucide-react';
 import Button from './ui/Button';
@@ -59,12 +58,12 @@ const Navbar = () => {
             <Link to="/categories" className="text-foreground hover:text-primary transition-colors font-medium">
               Categories
             </Link>
+            <Link to="/products" className="text-foreground hover:text-primary transition-colors font-medium">
+              Products
+            </Link>
             <Link to="/deals" className="text-foreground hover:text-primary transition-colors font-medium">
               Deals
             </Link>
-            <a href="#products" className="text-foreground hover:text-primary transition-colors font-medium">
-              Products
-            </a>
           </nav>
 
           {/* Search and Icons */}
@@ -165,19 +164,19 @@ const Navbar = () => {
                   Categories
                 </Link>
                 <Link 
+                  to="/products" 
+                  className="text-foreground hover:text-primary transition-colors font-medium"
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  Products
+                </Link>
+                <Link 
                   to="/deals" 
                   className="text-foreground hover:text-primary transition-colors font-medium"
                   onClick={() => setIsMenuOpen(false)}
                 >
                   Deals
                 </Link>
-                <a 
-                  href="#products" 
-                  className="text-foreground hover:text-primary transition-colors font-medium"
-                  onClick={() => setIsMenuOpen(false)}
-                >
-                  Products
-                </a>
                 
                 {isClerkAvailable ? (
                   <SignedOut>

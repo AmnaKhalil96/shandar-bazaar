@@ -7,7 +7,9 @@ import ProductCard from '@/components/ProductCard';
 import Newsletter from '@/components/Newsletter';
 import Footer from '@/components/Footer';
 import Button from '@/components/ui/Button';
-import { products, categories } from '@/lib/data';
+import { Product, Category } from '@/lib/data';
+import { fetchCategories, fetchProductsByCategory } from '@/services/api';
+import { useToast } from '@/components/ui/use-toast';
 
 const CategoryPage = () => {
   const { categoryName } = useParams();
@@ -17,24 +19,68 @@ const CategoryPage = () => {
   const [favorites, setFavorites] = useState<number[]>([]);
   const [showFavoritesOnly, setShowFavoritesOnly] = useState(false);
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
+  const [loading, setLoading] = useState(true);
+  const [currentCategory, setCurrentCategory] = useState<Category | null>(null);
+  const [products, setProducts] = useState<Product[]>([]);
+  const { toast } = useToast();
 
-  // Find the current category
-  const currentCategory = categories.find(
-    cat => cat.name.toLowerCase() === categoryName?.toLowerCase()
-  );
+  useEffect(() => {
+    // Load favorites from localStorage
+    const savedFavorites = localStorage.getItem('favorites');
+    if (savedFavorites) {
+      setFavorites(JSON.parse(savedFavorites));
+    }
+    
+    const fetchData = async () => {
+      if (!categoryName) return;
+      
+      setLoading(true);
+      try {
+        // Fetch all categories to find the current one
+        const categoriesData = await fetchCategories();
+        const category = categoriesData.find(
+          cat => cat.name.toLowerCase() === categoryName.toLowerCase()
+        );
+        setCurrentCategory(category || null);
+        
+        // Fetch products for this category
+        if (category) {
+          const productsData = await fetchProductsByCategory(categoryName);
+          setProducts(productsData);
+        }
+      } catch (error) {
+        console.error('Error fetching data:', error);
+        toast({
+          title: "Error",
+          description: "Failed to load data from MongoDB. Check your connection.",
+          variant: "destructive"
+        });
+      } finally {
+        setLoading(false);
+        
+        // Set a small delay to ensure smooth animations
+        const timer = setTimeout(() => {
+          setIsPageLoaded(true);
+        }, 100);
+        
+        return () => clearTimeout(timer);
+      }
+    };
+    
+    fetchData();
+  }, [categoryName, toast]);
 
-  // Filter products by category
-  const categoryProducts = products.filter(
-    product => product.category.toLowerCase() === categoryName?.toLowerCase()
-  );
+  // Save favorites to localStorage when they change
+  useEffect(() => {
+    localStorage.setItem('favorites', JSON.stringify(favorites));
+  }, [favorites]);
 
   // Handle search and favorites filtering
-  const filteredProducts = categoryProducts
-    .filter(product => {
-      const matchesSearch = product.name.toLowerCase().includes(searchQuery.toLowerCase());
-      const matchesFavorites = showFavoritesOnly ? favorites.includes(product.id) : true;
-      return matchesSearch && matchesFavorites;
-    });
+  const filteredProducts = products.filter(product => {
+    const matchesSearch = product.name.toLowerCase().includes(searchQuery.toLowerCase());
+    const matchesFavorites = showFavoritesOnly ? favorites.includes(product.id) : true;
+    return matchesSearch && matchesFavorites;
+  });
 
   // Toggle favorite status for a product
   const toggleFavorite = (productId: number) => {
@@ -45,31 +91,11 @@ const CategoryPage = () => {
     );
   };
 
-  useEffect(() => {
-    // Load favorites from localStorage
-    const savedFavorites = localStorage.getItem('favorites');
-    if (savedFavorites) {
-      setFavorites(JSON.parse(savedFavorites));
-    }
-    
-    // Set a small delay to ensure smooth animations
-    const timer = setTimeout(() => {
-      setIsPageLoaded(true);
-    }, 100);
-    
-    return () => clearTimeout(timer);
-  }, []);
-
-  // Save favorites to localStorage when they change
-  useEffect(() => {
-    localStorage.setItem('favorites', JSON.stringify(favorites));
-  }, [favorites]);
-
-  if (!currentCategory) {
+  if (!currentCategory && !loading) {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center">
         <h1 className="text-2xl font-bold mb-4">Category not found</h1>
-        <Button onClick={() => navigate('/')}>Back to Home</Button>
+        <Button onClick={() => navigate('/categories')}>Back to Categories</Button>
       </div>
     );
   }
@@ -88,10 +114,16 @@ const CategoryPage = () => {
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Categories
             </button>
-            <h1 className="text-3xl md:text-4xl font-bold mb-2">{currentCategory.name}</h1>
-            <p className="text-muted-foreground">
-              {filteredProducts.length} products available
-            </p>
+            {loading ? (
+              <div className="h-8 w-64 bg-gray-200 animate-pulse rounded mb-2"></div>
+            ) : (
+              <>
+                <h1 className="text-3xl md:text-4xl font-bold mb-2">{currentCategory?.name}</h1>
+                <p className="text-muted-foreground">
+                  {filteredProducts.length} products available
+                </p>
+              </>
+            )}
           </div>
         </div>
 
@@ -147,7 +179,13 @@ const CategoryPage = () => {
 
         {/* Products Grid */}
         <div className="container mx-auto px-4 py-12">
-          {filteredProducts.length > 0 ? (
+          {loading ? (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+              {[...Array(8)].map((_, index) => (
+                <div key={index} className="bg-gray-100 rounded-lg h-80 animate-pulse"></div>
+              ))}
+            </div>
+          ) : filteredProducts.length > 0 ? (
             viewMode === 'grid' ? (
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
                 {filteredProducts.map((product) => (

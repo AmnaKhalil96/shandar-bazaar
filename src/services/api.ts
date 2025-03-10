@@ -14,7 +14,8 @@ export const fetchProducts = async (): Promise<Product[]> => {
   } catch (error) {
     console.error('Error fetching products:', error);
     // Fallback to static data if API request fails
-    return [];
+    const { products: staticProducts } = await import('@/lib/data');
+    return staticProducts;
   }
 };
 
@@ -27,7 +28,10 @@ export const fetchProductById = async (id: string | number): Promise<Product | n
     return await response.json();
   } catch (error) {
     console.error(`Error fetching product ${id}:`, error);
-    return null;
+    // Fallback to static data if API request fails
+    const { products: staticProducts } = await import('@/lib/data');
+    const product = staticProducts.find(p => p.id === Number(id));
+    return product || null;
   }
 };
 
@@ -40,7 +44,9 @@ export const fetchProductsByCategory = async (category: string): Promise<Product
     return await response.json();
   } catch (error) {
     console.error(`Error fetching products for category ${category}:`, error);
-    return [];
+    // Fallback to static data if API request fails
+    const { products: staticProducts } = await import('@/lib/data');
+    return staticProducts.filter(p => p.category.toLowerCase() === category.toLowerCase());
   }
 };
 
@@ -55,7 +61,8 @@ export const fetchCategories = async (): Promise<Category[]> => {
   } catch (error) {
     console.error('Error fetching categories:', error);
     // Fallback to static data if API request fails
-    return [];
+    const { categories: staticCategories } = await import('@/lib/data');
+    return staticCategories;
   }
 };
 

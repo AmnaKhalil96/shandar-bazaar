@@ -4,44 +4,45 @@ import { ArrowRight } from 'lucide-react';
 import ProductCard from './ProductCard';
 import Button from './ui/Button';
 import { Link } from 'react-router-dom';
-import { fetchProducts } from '@/services/api';
+import { fetchProducts, fetchProductsByCategory } from '@/services/api';
 import { Product } from '@/lib/data';
+import { useToast } from '@/components/ui/use-toast';
 
 const ProductGrid = () => {
   const [activeCategory, setActiveCategory] = useState('All');
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
+  const { toast } = useToast();
   const categories = ['All', 'Electronics', 'Fashion', 'Home & Living', 'Beauty', 'Sports', 'Books'];
   
   useEffect(() => {
     const getProducts = async () => {
       setLoading(true);
       try {
-        const data = await fetchProducts();
-        if (data && data.length > 0) {
+        if (activeCategory === 'All') {
+          const data = await fetchProducts();
           setProducts(data);
         } else {
-          // Fallback to static data if API returns empty
-          const { products: staticProducts } = await import('@/lib/data');
-          setProducts(staticProducts);
+          const data = await fetchProductsByCategory(activeCategory);
+          setProducts(data);
         }
       } catch (error) {
         console.error('Error fetching products:', error);
-        // Fallback to static data on error
-        const { products: staticProducts } = await import('@/lib/data');
-        setProducts(staticProducts);
+        toast({
+          title: "Error",
+          description: "Failed to load products from MongoDB. Check your connection.",
+          variant: "destructive"
+        });
       } finally {
         setLoading(false);
       }
     };
     
     getProducts();
-  }, []);
+  }, [activeCategory, toast]);
   
-  // Filter products based on active category
-  const filteredProducts = activeCategory === 'All' 
-    ? products.slice(0, 8) // Only show first 8 products for All category
-    : products.filter(product => product.category === activeCategory).slice(0, 8);
+  // Filter products based on active category (limit to 8 products for display)
+  const filteredProducts = products.slice(0, 8);
 
   return (
     <section id="products" className="py-24">
@@ -76,9 +77,15 @@ const ProductGrid = () => {
           </div>
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {filteredProducts.map((product) => (
-              <ProductCard key={product.id} product={product} />
-            ))}
+            {filteredProducts.length > 0 ? (
+              filteredProducts.map((product) => (
+                <ProductCard key={product.id} product={product} />
+              ))
+            ) : (
+              <div className="col-span-4 text-center py-12">
+                <p className="text-muted-foreground">No products found for this category.</p>
+              </div>
+            )}
           </div>
         )}
 

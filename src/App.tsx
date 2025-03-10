@@ -29,6 +29,12 @@ import CustomersManagement from "./pages/dashboard/CustomersManagement";
 import AnalyticsPage from "./pages/dashboard/AnalyticsPage";
 import SettingsPage from "./pages/dashboard/SettingsPage";
 
+// User Dashboard imports
+import UserDashboardLayout from "./layouts/UserDashboardLayout";
+import UserDashboardOverview from "./pages/user-dashboard/UserDashboardOverview";
+import UserOrders from "./pages/user-dashboard/UserOrders";
+import UserWishlist from "./pages/user-dashboard/UserWishlist";
+
 const queryClient = new QueryClient();
 
 const App = () => (
@@ -53,7 +59,7 @@ const App = () => (
           <Route path="/deals" element={<DealsPage />} />
           <Route path="/account/*" element={<AccountPage />} />
           
-          {/* Dashboard Routes */}
+          {/* Admin Dashboard Routes */}
           <Route path="/dashboard" element={<DashboardLayout />}>
             <Route index element={<DashboardOverview />} />
             <Route path="products" element={<ProductsManagement />} />
@@ -61,6 +67,16 @@ const App = () => (
             <Route path="customers" element={<CustomersManagement />} />
             <Route path="analytics" element={<AnalyticsPage />} />
             <Route path="settings" element={<SettingsPage />} />
+          </Route>
+          
+          {/* User Dashboard Routes */}
+          <Route path="/user-dashboard" element={<UserDashboardLayout />}>
+            <Route index element={<UserDashboardOverview />} />
+            <Route path="orders" element={<UserOrders />} />
+            <Route path="wishlist" element={<UserWishlist />} />
+            <Route path="payment-methods" element={<UserPaymentMethods />} />
+            <Route path="order-history" element={<UserOrderHistory />} />
+            <Route path="profile" element={<UserProfile />} />
           </Route>
           
           <Route path="*" element={<NotFound />} />

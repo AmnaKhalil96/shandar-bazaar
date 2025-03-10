@@ -46,7 +46,7 @@ const ProductGrid = () => {
           ))}
         </div>
 
-        <div className="mt-12 flex justify-center gap-4">
+        <div className="mt-12 flex flex-wrap justify-center gap-4">
           <Link to="/products">
             <Button 
               variant="outline" 
@@ -60,6 +60,12 @@ const ProductGrid = () => {
           <Link to="/dashboard">
             <Button variant="primary">
               Admin Dashboard
+            </Button>
+          </Link>
+          
+          <Link to="/user-dashboard">
+            <Button variant="secondary">
+              My Account
             </Button>
           </Link>
         </div>

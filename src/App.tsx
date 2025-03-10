@@ -34,6 +34,9 @@ import UserDashboardLayout from "./layouts/UserDashboardLayout";
 import UserDashboardOverview from "./pages/user-dashboard/UserDashboardOverview";
 import UserOrders from "./pages/user-dashboard/UserOrders";
 import UserWishlist from "./pages/user-dashboard/UserWishlist";
+import UserPaymentMethods from "./pages/user-dashboard/UserPaymentMethods";
+import UserOrderHistory from "./pages/user-dashboard/UserOrderHistory";
+import UserProfile from "./pages/user-dashboard/UserProfile";
 
 const queryClient = new QueryClient();
 

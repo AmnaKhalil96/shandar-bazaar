@@ -38,55 +38,78 @@ import UserPaymentMethods from "./pages/user-dashboard/UserPaymentMethods";
 import UserOrderHistory from "./pages/user-dashboard/UserOrderHistory";
 import UserProfile from "./pages/user-dashboard/UserProfile";
 
+import { useEffect, useState } from "react";
+
 const queryClient = new QueryClient();
 
-const App = () => (
-  <QueryClientProvider client={queryClient}>
-    <TooltipProvider>
-      <CartProvider>
-        <Toaster />
-        <Sonner />
-        <Routes>
-          {/* Store Routes */}
-          <Route path="/" element={<Index />} />
-          <Route path="/categories" element={<CategoriesPage />} />
-          <Route path="/products" element={<ProductsPage />} />
-          <Route path="/category/:categoryName" element={<CategoryPage />} />
-          <Route path="/cart" element={<CartPage />} />
-          <Route path="/checkout" element={<CheckoutPage />} />
-          <Route path="/product/:productId" element={<ProductDetailPage />} />
-          <Route path="/favorites" element={<FavoritesPage />} />
-          <Route path="/search" element={<SearchPage />} />
-          <Route path="/sign-in/*" element={<SignInPage />} />
-          <Route path="/sign-up/*" element={<SignUpPage />} />
-          <Route path="/deals" element={<DealsPage />} />
-          <Route path="/account/*" element={<AccountPage />} />
-          
-          {/* Admin Dashboard Routes */}
-          <Route path="/dashboard" element={<DashboardLayout />}>
-            <Route index element={<DashboardOverview />} />
-            <Route path="products" element={<ProductsManagement />} />
-            <Route path="categories" element={<CategoriesManagement />} />
-            <Route path="customers" element={<CustomersManagement />} />
-            <Route path="analytics" element={<AnalyticsPage />} />
-            <Route path="settings" element={<SettingsPage />} />
-          </Route>
-          
-          {/* User Dashboard Routes */}
-          <Route path="/user-dashboard" element={<UserDashboardLayout />}>
-            <Route index element={<UserDashboardOverview />} />
-            <Route path="orders" element={<UserOrders />} />
-            <Route path="wishlist" element={<UserWishlist />} />
-            <Route path="payment-methods" element={<UserPaymentMethods />} />
-            <Route path="order-history" element={<UserOrderHistory />} />
-            <Route path="profile" element={<UserProfile />} />
-          </Route>
-          
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </CartProvider>
-    </TooltipProvider>
-  </QueryClientProvider>
-);
+const App = () => {
+  const [usingMongoDB, setUsingMongoDB] = useState(false);
+  
+  useEffect(() => {
+    // Check if MongoDB URI is available
+    const mongoURI = import.meta.env.VITE_MONGODB_URI;
+    setUsingMongoDB(!!mongoURI);
+    
+    if (mongoURI) {
+      console.log("App is configured to use MongoDB");
+    } else {
+      console.log("App is using static data (MongoDB not configured)");
+    }
+  }, []);
+
+  return (
+    <QueryClientProvider client={queryClient}>
+      <TooltipProvider>
+        <CartProvider>
+          <Toaster />
+          <Sonner />
+          {usingMongoDB && (
+            <div className="fixed top-0 left-0 right-0 bg-green-600 text-white text-xs text-center py-1 z-50">
+              Using MongoDB Database
+            </div>
+          )}
+          <Routes>
+            {/* Store Routes */}
+            <Route path="/" element={<Index />} />
+            <Route path="/categories" element={<CategoriesPage />} />
+            <Route path="/products" element={<ProductsPage />} />
+            <Route path="/category/:categoryName" element={<CategoryPage />} />
+            <Route path="/cart" element={<CartPage />} />
+            <Route path="/checkout" element={<CheckoutPage />} />
+            <Route path="/product/:productId" element={<ProductDetailPage />} />
+            <Route path="/favorites" element={<FavoritesPage />} />
+            <Route path="/search" element={<SearchPage />} />
+            <Route path="/sign-in/*" element={<SignInPage />} />
+            <Route path="/sign-up/*" element={<SignUpPage />} />
+            <Route path="/deals" element={<DealsPage />} />
+            <Route path="/account/*" element={<AccountPage />} />
+            
+            {/* Admin Dashboard Routes */}
+            <Route path="/dashboard" element={<DashboardLayout />}>
+              <Route index element={<DashboardOverview />} />
+              <Route path="products" element={<ProductsManagement />} />
+              <Route path="categories" element={<CategoriesManagement />} />
+              <Route path="customers" element={<CustomersManagement />} />
+              <Route path="analytics" element={<AnalyticsPage />} />
+              <Route path="settings" element={<SettingsPage />} />
+            </Route>
+            
+            {/* User Dashboard Routes */}
+            <Route path="/user-dashboard" element={<UserDashboardLayout />}>
+              <Route index element={<UserDashboardOverview />} />
+              <Route path="orders" element={<UserOrders />} />
+              <Route path="wishlist" element={<UserWishlist />} />
+              <Route path="payment-methods" element={<UserPaymentMethods />} />
+              <Route path="order-history" element={<UserOrderHistory />} />
+              <Route path="profile" element={<UserProfile />} />
+            </Route>
+            
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </CartProvider>
+      </TooltipProvider>
+    </QueryClientProvider>
+  );
+};
 
 export default App;

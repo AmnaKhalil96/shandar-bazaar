@@ -1,22 +1,41 @@
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/shadcn-button';
 import { Edit, Plus, Trash2 } from 'lucide-react';
 import { useToast } from '@/components/ui/use-toast';
-
-// Sample categories data
-const categories = [
-  { id: 1, name: 'Electronics', productCount: 15, image: 'https://placehold.co/100x100?text=Electronics' },
-  { id: 2, name: 'Fashion', productCount: 12, image: 'https://placehold.co/100x100?text=Fashion' },
-  { id: 3, name: 'Home & Living', productCount: 8, image: 'https://placehold.co/100x100?text=Home' },
-  { id: 4, name: 'Beauty', productCount: 6, image: 'https://placehold.co/100x100?text=Beauty' },
-  { id: 5, name: 'Sports', productCount: 10, image: 'https://placehold.co/100x100?text=Sports' },
-  { id: 6, name: 'Books', productCount: 7, image: 'https://placehold.co/100x100?text=Books' },
-];
+import { Category } from '@/lib/data';
+import { fetchCategories, deleteCategory } from '@/services/api';
 
 export default function CategoriesManagement() {
   const [searchQuery, setSearchQuery] = useState('');
+  const [categories, setCategories] = useState<Category[]>([]);
+  const [loading, setLoading] = useState(true);
   const { toast } = useToast();
+  
+  useEffect(() => {
+    const getCategories = async () => {
+      setLoading(true);
+      try {
+        const data = await fetchCategories();
+        if (data && data.length > 0) {
+          setCategories(data);
+        } else {
+          // Fallback to static data if API returns empty
+          const { categories: staticCategories } = await import('@/lib/data');
+          setCategories(staticCategories);
+        }
+      } catch (error) {
+        console.error('Error fetching categories:', error);
+        // Fallback to static data on error
+        const { categories: staticCategories } = await import('@/lib/data');
+        setCategories(staticCategories);
+      } finally {
+        setLoading(false);
+      }
+    };
+    
+    getCategories();
+  }, []);
   
   // Filter categories based on search
   const filteredCategories = categories.filter(category => 
@@ -26,24 +45,61 @@ export default function CategoriesManagement() {
   const handleAddCategory = () => {
     toast({
       title: "Add Category",
-      description: "This would open a form to add a new category.",
+      description: "This would open a form to add a new category to MongoDB.",
     });
   };
   
   const handleEditCategory = (categoryId: number) => {
     toast({
       title: "Edit Category",
-      description: `Editing category with ID: ${categoryId}`,
+      description: `Editing category with ID: ${categoryId} in MongoDB`,
     });
   };
   
-  const handleDeleteCategory = (categoryId: number) => {
-    toast({
-      title: "Delete Category",
-      description: `Deleting category with ID: ${categoryId}`,
-      variant: "destructive",
-    });
+  const handleDeleteCategory = async (categoryId: number) => {
+    try {
+      const success = await deleteCategory(categoryId);
+      
+      if (success) {
+        // Remove from local state
+        setCategories(prev => prev.filter(cat => cat.id !== categoryId));
+        
+        toast({
+          title: "Category Deleted",
+          description: `Category with ID: ${categoryId} has been deleted from MongoDB`,
+        });
+      } else {
+        toast({
+          title: "Delete Failed",
+          description: "Failed to delete category from the database",
+          variant: "destructive",
+        });
+      }
+    } catch (error) {
+      console.error("Error deleting category:", error);
+      toast({
+        title: "Delete Failed",
+        description: "An error occurred while deleting the category",
+        variant: "destructive",
+      });
+    }
   };
+  
+  if (loading) {
+    return (
+      <div className="space-y-6">
+        <div className="flex items-center justify-between">
+          <h2 className="text-3xl font-bold tracking-tight">Categories</h2>
+          <div className="h-10 w-32 bg-gray-200 animate-pulse rounded-md"></div>
+        </div>
+        <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-3">
+          {[...Array(6)].map((_, index) => (
+            <div key={index} className="rounded-lg border bg-card h-48 animate-pulse"></div>
+          ))}
+        </div>
+      </div>
+    );
+  }
   
   return (
     <div className="space-y-6">
@@ -72,7 +128,7 @@ export default function CategoriesManagement() {
           <div key={category.id} className="rounded-lg border bg-card overflow-hidden">
             <div className="relative aspect-video">
               <img 
-                src={category.image} 
+                src={`https://placehold.co/100x100?text=${category.name}`} 
                 alt={category.name} 
                 className="w-full h-full object-cover"
               />
@@ -80,7 +136,7 @@ export default function CategoriesManagement() {
             <div className="p-4">
               <h3 className="text-lg font-semibold">{category.name}</h3>
               <p className="text-sm text-muted-foreground">
-                {category.productCount} products
+                {category.itemCount} products
               </p>
               <div className="flex items-center justify-end gap-2 mt-4">
                 <Button

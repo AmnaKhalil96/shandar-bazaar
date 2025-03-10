@@ -1,14 +1,42 @@
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { ArrowRight } from 'lucide-react';
 import ProductCard from './ProductCard';
-import { products } from '@/lib/data';
 import Button from './ui/Button';
 import { Link } from 'react-router-dom';
+import { fetchProducts } from '@/services/api';
+import { Product } from '@/lib/data';
 
 const ProductGrid = () => {
   const [activeCategory, setActiveCategory] = useState('All');
+  const [products, setProducts] = useState<Product[]>([]);
+  const [loading, setLoading] = useState(true);
   const categories = ['All', 'Electronics', 'Fashion', 'Home & Living', 'Beauty', 'Sports', 'Books'];
+  
+  useEffect(() => {
+    const getProducts = async () => {
+      setLoading(true);
+      try {
+        const data = await fetchProducts();
+        if (data && data.length > 0) {
+          setProducts(data);
+        } else {
+          // Fallback to static data if API returns empty
+          const { products: staticProducts } = await import('@/lib/data');
+          setProducts(staticProducts);
+        }
+      } catch (error) {
+        console.error('Error fetching products:', error);
+        // Fallback to static data on error
+        const { products: staticProducts } = await import('@/lib/data');
+        setProducts(staticProducts);
+      } finally {
+        setLoading(false);
+      }
+    };
+    
+    getProducts();
+  }, []);
   
   // Filter products based on active category
   const filteredProducts = activeCategory === 'All' 
@@ -40,11 +68,19 @@ const ProductGrid = () => {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {filteredProducts.map((product) => (
-            <ProductCard key={product.id} product={product} />
-          ))}
-        </div>
+        {loading ? (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {[...Array(8)].map((_, index) => (
+              <div key={index} className="bg-gray-100 rounded-lg h-80 animate-pulse"></div>
+            ))}
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {filteredProducts.map((product) => (
+              <ProductCard key={product.id} product={product} />
+            ))}
+          </div>
+        )}
 
         <div className="mt-12 flex flex-wrap justify-center gap-4">
           <Link to="/products">

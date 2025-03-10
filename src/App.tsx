@@ -20,6 +20,15 @@ import AccountPage from "./pages/AccountPage";
 import ProductsPage from "./pages/ProductsPage";
 import { CartProvider } from "./contexts/CartContext";
 
+// Dashboard imports
+import DashboardLayout from "./layouts/DashboardLayout";
+import DashboardOverview from "./pages/dashboard/DashboardOverview";
+import ProductsManagement from "./pages/dashboard/ProductsManagement";
+import CategoriesManagement from "./pages/dashboard/CategoriesManagement";
+import CustomersManagement from "./pages/dashboard/CustomersManagement";
+import AnalyticsPage from "./pages/dashboard/AnalyticsPage";
+import SettingsPage from "./pages/dashboard/SettingsPage";
+
 const queryClient = new QueryClient();
 
 const App = () => (
@@ -29,6 +38,7 @@ const App = () => (
         <Toaster />
         <Sonner />
         <Routes>
+          {/* Store Routes */}
           <Route path="/" element={<Index />} />
           <Route path="/categories" element={<CategoriesPage />} />
           <Route path="/products" element={<ProductsPage />} />
@@ -42,6 +52,17 @@ const App = () => (
           <Route path="/sign-up/*" element={<SignUpPage />} />
           <Route path="/deals" element={<DealsPage />} />
           <Route path="/account/*" element={<AccountPage />} />
+          
+          {/* Dashboard Routes */}
+          <Route path="/dashboard" element={<DashboardLayout />}>
+            <Route index element={<DashboardOverview />} />
+            <Route path="products" element={<ProductsManagement />} />
+            <Route path="categories" element={<CategoriesManagement />} />
+            <Route path="customers" element={<CustomersManagement />} />
+            <Route path="analytics" element={<AnalyticsPage />} />
+            <Route path="settings" element={<SettingsPage />} />
+          </Route>
+          
           <Route path="*" element={<NotFound />} />
         </Routes>
       </CartProvider>

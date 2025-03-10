@@ -46,14 +46,20 @@ const ProductGrid = () => {
           ))}
         </div>
 
-        <div className="mt-12 text-center">
+        <div className="mt-12 flex justify-center gap-4">
           <Link to="/products">
             <Button 
               variant="outline" 
-              className="mx-auto group"
+              className="group"
             >
               View All Products
               <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
+            </Button>
+          </Link>
+          
+          <Link to="/dashboard">
+            <Button variant="primary">
+              Admin Dashboard
             </Button>
           </Link>
         </div>
